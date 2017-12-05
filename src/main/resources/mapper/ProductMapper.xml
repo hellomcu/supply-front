@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supply.front.module.product.mapper.ProductMapper">
+
+
+	<update id="reduceNum">
+		update t_product
+		set
+		product_num = product_num -
+		#{param2},
+		where id = #{param1} AND status
+		= 0
+	</update>
+
+	<resultMap id="productResult" type="ProductPo">
+		<id property="id" column="product_id" />
+		<result property="productName" column="product_name" />
+		<result property="totalNum" column="total_num" />
+		<result property="productNum" column="product_num" />
+		<result property="productPrice" column="product_price" />
+		<result property="productUnit" column="product_unit" />
+		<result property="productPlace" column="product_place" />
+		<result property="description" column="description" />
+		<result property="createTime" column="create_time" />
+		<result property="categoryId" column="category_id" />
+		<result property="categoryName" column="category_name" />
+		<result property="parentId" column="parent_id" />
+		<result property="parentName" column="parent_name" />
+	</resultMap>
+
+	<!--resultType：如果返回的是一个集合，要写集合中元素的类型 -->
+	<select id="findAll" resultMap="productResult" parameterType="com.supply.entity.PageInfo">
+		SELECT p.id product_id,
+		p.product_name product_name,
+		p.total_num total_num, p.product_num
+		product_num,
+		p.product_price product_price, p.product_unit
+		product_unit,
+		p.product_place product_place, p.description description,
+		p.create_time create_time,
+		c.id category_id,c.category_name category_name,
+		c2.id parent_id, c2.category_name parent_name
+		FROM
+		t_product p LEFT JOIN t_category c ON p.category_id = c.id
+		LEFT JOIN
+		t_category c2 ON c2.id = c.parent_id
+		WHERE p.status = 0 AND
+		c.status = 0
+		AND c2.status = 0
+		ORDER BY p.create_time DESC LIMIT
+		#{startItemNum}, #{itemNum}
+	</select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supply.front.module.user.mapper.UserMapper">
+
+<!-- 	<resultMap id="userMap" type="com.supply.front.entity.po.UserPo"> -->
+<!-- 		<id property="id" column="id"/> -->
+<!-- 		<result property="password" column="password" /> -->
+<!-- 		<result property="storeId" column="store_id" /> -->
+<!-- 		<result property="trueName" column="true_name" /> -->
+<!-- 		<result property="phone" column="phone" /> -->
+<!-- 		<result property="email" column="email" /> -->
+<!-- 	</resultMap> -->
+
+
+	<select id="findOneByUsernameAndType" resultType="UserPo">
+		SELECT id, store_id, username, password
+		FROM t_user
+		WHERE username = #{param1} AND user_type = #{param2} AND status = 0
+	</select>
+
+</mapper>

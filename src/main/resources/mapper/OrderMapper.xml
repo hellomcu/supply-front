@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supply.front.module.order.mapper.OrderMapper">
+
+
+	<insert id="save" parameterType="OrderPo" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO t_order
+		(store_id, total_price, product_num,
+		total_num, receiving_address,
+		contacts, order_status, order_remark,
+		create_time)
+		VALUES (#{storeId}, #{totalPrice}, #{productNum},
+		#{totalNum},
+		#{receivingAddress},
+		#{contacts}, #{orderStatus,
+		typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler},
+		#{orderRemark}, #{createTime})
+
+	</insert>
+
+	<insert id="saveDetails">
+		INSERT INTO t_order_detail
+		(order_id, product_id, product_name,
+		product_num,
+		unit_price, product_unit, create_time)
+		VALUES
+		<foreach item="orderDetail" collection="details" separator=",">
+			(#{orderId}, #{orderDetail.productId}, #{orderDetail.productName},
+			#{orderDetail.productNum}, #{orderDetail.unitPrice},
+			#{orderDetail.productUnit}, #{orderDetail.createTime})
+		</foreach>
+	</insert>
+
+
+	<resultMap id="orderResult" type="OrderPo">
+		<id property="id" column="order_id" />
+		<result property="totalPrice" column="total_price" />
+		<result property="orderStatus" column="order_status"
+			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+		<result property="createTime" column="create_time" />
+		<collection property="details" resultMap="orderDetailResult"/>		
+
+	</resultMap>
+
+	<resultMap id="orderDetailResult" type="OrderDetailPo">
+		<id property="id" column="detail_id" />
+		<result property="productId" column="product_id" />
+		<result property="productName" column="product_name" />
+		<result property="productNum" column="product_num" />
+		<result property="unitPrice" column="unit_price" />
+		<result property="productUnit" column="product_unit" />
+	</resultMap>
+
+
+	<select id="findByStoreId" resultMap="orderResult">
+		SELECT o.id order_id, o.total_price total_price,
+		o.order_status order_status, o.create_time create_time,
+		od.id
+		detail_id, od.product_id product_id, od.product_name product_name,
+		od.product_num product_num,
+		od.unit_price unit_price, od.product_unit
+		product_unit
+		FROM t_order o
+		LEFT JOIN t_order_detail od
+		ON o.id =
+		od.order_id AND od.status = 0
+		WHERE o.status = 0
+		AND o.id IN(
+		SELECT t.id
+		FROM (SELECT id FROM t_order WHERE t_order.store_id = #{storeId}
+		AND
+		t_order.status = 0 LIMIT #{page.startItemNum}, #{page.itemNum})AS
+		t)
+		ORDER BY o.create_time DESC
+	</select>
+
+</mapper>
