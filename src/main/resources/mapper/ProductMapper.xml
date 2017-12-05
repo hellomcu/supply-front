@@ -7,7 +7,7 @@
 		update t_product
 		set
 		product_num = product_num -
-		#{param2},
+		#{param2}
 		where id = #{param1} AND status
 		= 0
 	</update>

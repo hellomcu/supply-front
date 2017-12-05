@@ -29,12 +29,12 @@
 
 	<root level="error">
 		<appender-ref ref="console" />
-		<appender-ref ref="file" />
+<!-- 		<appender-ref ref="file" /> -->
 	</root>
 
-<!-- 	<root level="debug"> -->
-<!-- 		<appender-ref ref="console" /> -->
-<!-- 	</root> -->
+	<root level="debug">
+		<appender-ref ref="console" />
+	</root>
 
 	<!-- logback为java中的包 -->
 	<!-- <logger name="com.dudu.controller"/> -->
