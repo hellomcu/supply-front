@@ -52,7 +52,14 @@ public class OrderServiceImpl implements OrderService
 		// 修改库存
 		for (OrderDetailPo detail : orderDetails)
 		{
-			productMapper.reduceNum(detail.getProductId(), detail.getProductNum());
+			long productId = detail.getProductId();
+			long currentNum = productMapper.findProductNum(productId);
+			int num = detail.getProductNum();
+			if (currentNum < num)
+			{
+				throw new SupplyException("商品库存不足");
+			}
+			productMapper.reduceNum(productId, num);
 		}
 
 	}

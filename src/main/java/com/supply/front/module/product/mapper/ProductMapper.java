@@ -11,9 +11,11 @@ import com.supply.entity.po.ProductPo;
 @Mapper
 public interface ProductMapper extends Repository
 {
-	int reduceNum(long id, int product_num);
+	int reduceNum(long id, int productNum);
 	
 //	List<ProductPo> findAll(long pageStart, int pageSize);
 	
 	List<ProductPo> findAll(PageInfo page);
+	
+	long findProductNum(long id);
 }

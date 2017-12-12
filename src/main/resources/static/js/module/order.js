@@ -1,17 +1,16 @@
-function toOrder(id, productName, unitPrice, productUnit) {
+function toOrder(id, productName, productNum, unitPrice, productUnit, contact, address, remark) {
 
 	var jsonParams = {
-		"contacts" : "13120719587",
+		"contacts" : contact,
 		"orderDetails" : [ {
 			"productId" : id,
 			"productName" : productName,
-			"productNum" : 10,
+			"productNum" : productNum,
 			"productUnit" : productUnit,
-			"unitPrice" : 5.5
+			"unitPrice" : unitPrice
 		} ],
-		"orderRemark" : "加急",
-		"receivingAddress" : "濮阳濮城",
-		"storeId" : 20
+		"orderRemark" : remark,
+		"receivingAddress" : address
 	};
 
 	$.ajax({
@@ -24,15 +23,14 @@ function toOrder(id, productName, unitPrice, productUnit) {
 		success : function(data) {
 			// alert(JSON.stringify(data));
 
-			alert(data.code);
-
 			if (data.code == 1) {
 				alert("下单成功");
+				window.location.href = "./getGoods.html";
 			} else {
 				alert(data.message);
 			}
 
-			window.location.href = "./getGoods.html";
+			
 
 		},
 		error : function() {

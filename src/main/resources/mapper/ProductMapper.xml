@@ -51,4 +51,10 @@
 		#{startItemNum}, #{itemNum}
 	</select>
 
+	<select id="findProductNum" resultType="long">
+		SELECT product_num
+		FROM t_product
+		WHERE id = #{id} AND status = 0
+	</select>
+
 </mapper>
