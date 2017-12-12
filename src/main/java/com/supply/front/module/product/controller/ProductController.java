@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.supply.base.controller.BaseController;
-import com.supply.beanutil.WrappedBeanCopier;
 import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.ProductPo;
 import com.supply.front.entity.dto.ProductDto;
 import com.supply.front.module.product.service.ProductService;
+import com.supply.front.util.WrappedBeanCopier;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
