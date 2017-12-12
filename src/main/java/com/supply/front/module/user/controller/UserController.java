@@ -42,7 +42,9 @@ public class UserController extends BaseController
 	{
 		String username = userLoginDto.getUsername();
 		UserPo userPo = mUserService.userLogin(username, userLoginDto.getPassword(), userLoginDto.getType());
-		String jwt = JwtUtil.createJwt(username);
+	
+		String jwt = JwtUtil.createJwt(userPo);
+		
 //		response.setHeader("Access-Control-Allow-Origin", "*");  
 //        response.setHeader("Access-Control-Allow-Methods", "*");  
 //        response.setHeader("Access-Control-Max-Age", "3600");  
