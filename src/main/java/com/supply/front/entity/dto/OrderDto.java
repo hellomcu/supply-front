@@ -1,6 +1,7 @@
 package com.supply.front.entity.dto;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.supply.contant.OrderStatus;
@@ -20,6 +21,7 @@ public class OrderDto extends BaseDto
 	private int totalNum;
 	private OrderStatus orderStatus;
 	private List<OrderDetailDto> details;
+	private Timestamp createTime;
 
 	public long getId()
 	{
@@ -78,6 +80,14 @@ public class OrderDto extends BaseDto
 	public void setDetails(List<OrderDetailDto> details)
 	{
 		this.details = details;
+	}
+	public Timestamp getCreateTime()
+	{
+		return createTime;
+	}
+	public void setCreateTime(Timestamp createTime)
+	{
+		this.createTime = createTime;
 	}
 
 }

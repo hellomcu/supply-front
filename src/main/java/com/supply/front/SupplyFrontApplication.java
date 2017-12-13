@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @SpringBootApplication
 public class SupplyFrontApplication
@@ -19,7 +21,13 @@ public class SupplyFrontApplication
 		SpringApplication.run(SupplyFrontApplication.class, args);
 	}
 
-
+	@Bean
+	public ObjectMapper getObjectMapper()
+	{
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_INDEX, true);
+		return objectMapper;
+	}
 
 	@Autowired
 	private Environment env;
