@@ -15,30 +15,6 @@ function getMyOrders(num) {
 				}
 			});
 
-	// $.ajax({
-	// url: 'front/order/my_orders?page=' + num + '&num=100000',
-	// // contentType : "application/json; charset=utf-8",
-	// // data : JSON.stringify(jsonParams),
-	// withCredentials: true,
-	// type: 'get',
-	// cache: false,
-	// dataType: 'json',
-	// success: function (data) {
-	// // alert(JSON.stringify(data));
-	//
-	// // alert(JSON.stringify(data.data));
-	//
-	// if (data.code != 1) {
-	// alert(data.message);
-	// } else {
-	// initData(data.data);
-	// }
-	// },
-	// error: function () {
-	// alert("异常");
-	// }
-	// });
-
 }
 
 function initData(data) {
@@ -67,12 +43,13 @@ function initData(data) {
 			nameStr = nameStr.substring(0, index);
 		}
 		prod.innerHTML = nameStr;
+		var totalPrice = data[i].totalPrice;
 		num.innerHTML = data[i].productNum;
-		total.innerHTML = data[i].totalPrice;
-		
+		total.innerHTML = totalPrice;
+
 		var status = data[i].orderStatus;
 		var statusStr = '未知';
-		
+
 		if (status === 1) {
 			statusStr = '已下单';
 		} else if (status === 2) {
@@ -85,6 +62,29 @@ function initData(data) {
 			statusStr = '已收货';
 		}
 		statusCol.innerHTML = statusStr;
-		detail.innerHTML = "<button type='button' class='btn btn-success' >查看详情</button>";
+		var params = 'totalPrice=' + totalPrice + '&status=' + statusStr + '&details=' + details;
+		detail.innerHTML = "<button type='button' class='btn btn-success' onclick='javascript:window.location.href=my_order_detail.html?" + params + ">查看详情</button>";
 	}
+}
+
+function getMyOrderDetail(order, products) {
+	for (var i = 0; i < products.length; i++) {
+		// alert(JSON.stringify(data[i].createTime));
+
+		var newRow = document.getElementById('tb').insertRow(i);
+		var no = newRow.insertCell(0);
+		var prod = newRow.insertCell(1);
+		var unit = newRow.insertCell(2);
+		var num = newRow.insertCell(3);
+		var total = newRow.insertCell(4);
+		
+		no.innerHTML = i + 1;
+		prod.innerHTML = products[i].productName;
+		var unitPrice = products[i].unitPrice;
+		unit.innerHTML = unitPrice;
+		var productNum = products[i].productNum;
+		num.innerHTML = productNum;
+		total.innerHTML = unitPrice * productNum;
+	}
+
 }
