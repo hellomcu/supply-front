@@ -23,17 +23,14 @@
 	vertical-align: middle !important;
 }
 </style>
-<script type="text/javascript">
-	var details = JSON.parse(decodeURI(getQueryString('details')));
-	alert(details[0].productName);
-</script>
+
 </head>
-<body onload="getMyOrders(1);">
+<body>
 	<!-- 	<input type="button" class="button05" value="添加门店" -->
 	<!-- 		onclick="addMenDian();" /> -->
 	<div class="container">
 		<br />
-		<h3>我的订单</h3>
+		<h3>订单详情</h3>
 		<br />
 		<table id="myTable"
 			class="table table-striped table-hover table-bordered">
@@ -41,7 +38,6 @@
 			<!-- cellspacing="30"> -->
 			<thead>
 				<tr class="info">
-				<tr>
 					<th class="col-xs-1">编号</th>
 					<th class="col-xs-5">商品</th>
 					<th class="col-xs-2">单价(单位: 元)</th>
@@ -53,10 +49,16 @@
 
 			</tbody>
 		</table>
+		<address id="addr">
+		</address>
 	</div>
 	<!-- 	</div> -->
 </body>
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="js/module/my_order_detail.js"></script>
+<script type="text/javascript">
+	initData(JSON.parse(decodeURI(getQueryString('order'))), getQueryString('totalPrice'), decodeURI(getQueryString('status')),
+			JSON.parse(decodeURI(getQueryString('details'))));
+</script>
 </html>
 
-<script type="text/javascript" src="js/global.js"></script>
-<script type="text/javascript" src="js/module/my_orders.js"></script>

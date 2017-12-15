@@ -37,6 +37,8 @@
 		<id property="id" column="order_id" />
 		<result property="productNum" column="product_num" />
 		<result property="totalPrice" column="total_price" />
+		<result property="contacts" column="contacts" />
+		<result property="receivingAddress" column="receiving_address" />
 		<result property="orderStatus" column="order_status"
 			typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
 		<result property="createTime" column="create_time" />
@@ -56,6 +58,7 @@
 
 	<select id="findByStoreId" resultMap="orderResult">
 		SELECT o.id order_id, o.product_num product_num, o.total_price total_price,
+		o.contacts contacts, o.receiving_address receiving_address,
 		o.order_status order_status, o.create_time create_time,
 		od.id
 		detail_id, od.product_id product_id, od.product_name product_name,

@@ -30,8 +30,9 @@ function initData(data) {
 		var detail = newRow.insertCell(5);
 
 		no.innerHTML = i + 1;
-
-		var details = data[i].details;
+		var order = data[i];
+		var details = order.details;
+		
 		var nameStr = "";
 		var len = details.length;
 		for (var j = 0; j < len; j++) {
@@ -43,11 +44,11 @@ function initData(data) {
 			nameStr = nameStr.substring(0, index);
 		}
 		prod.innerHTML = nameStr;
-		var totalPrice = data[i].totalPrice;
-		num.innerHTML = data[i].productNum;
+		var totalPrice = order.totalPrice;
+		num.innerHTML = order.productNum;
 		total.innerHTML = totalPrice;
 
-		var status = data[i].orderStatus;
+		var status = order.orderStatus;
 		var statusStr = '未知';
 
 		if (status === 1) {
@@ -62,8 +63,9 @@ function initData(data) {
 			statusStr = '已收货';
 		}
 		statusCol.innerHTML = statusStr;
-		var params = 'totalPrice=' + totalPrice + '&status=' + statusStr + '&details=' + details;
-		detail.innerHTML = "<button type='button' class='btn btn-success' onclick='javascript:window.location.href=my_order_detail.html?" + params + ">查看详情</button>";
+		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order))) + '&totalPrice=' + totalPrice + '&status=' + statusStr + '&details=' + encodeURI(encodeURI(JSON.stringify(details)));
+
+		detail.innerHTML = "<button type='button' class='btn btn-success' onclick='javascript:window.location.href=\"my_order_detail.html?" + params + "\"'>查看详情</button>";
 	}
 }
 

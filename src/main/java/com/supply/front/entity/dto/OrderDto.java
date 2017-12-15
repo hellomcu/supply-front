@@ -19,6 +19,8 @@ public class OrderDto extends BaseDto
 	private BigDecimal totalPrice;
 	private int productNum;
 	private int totalNum;
+	private String contacts;
+	private String receivingAddress;
 	private OrderStatus orderStatus;
 	private List<OrderDetailDto> details;
 	private Timestamp createTime;
@@ -89,5 +91,21 @@ public class OrderDto extends BaseDto
 	{
 		this.createTime = createTime;
 	}
-
+	public String getContacts()
+	{
+		return contacts;
+	}
+	public void setContacts(String contacts)
+	{
+		this.contacts = contacts;
+	}
+	public String getReceivingAddress()
+	{
+		return receivingAddress;
+	}
+	public void setReceivingAddress(String receivingAddress)
+	{
+		this.receivingAddress = receivingAddress;
+	}
+	
 }
