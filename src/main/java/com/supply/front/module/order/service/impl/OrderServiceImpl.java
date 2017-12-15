@@ -50,6 +50,8 @@ public class OrderServiceImpl implements OrderService
 		{
 			throw new SupplyException("下单失败,购买的产品已下架");
 		}
+		
+		//计算订单总价，计算商品总数，检查库存,设置订单详情的商品信息,商品剩余数量
 		OrderPo tmp = processOrderProduct(detailParams, myProducts);
 		
 		order.setProductNum(num);
@@ -101,6 +103,7 @@ public class OrderServiceImpl implements OrderService
 				throw new SupplyException(
 						String.format("下单失败,您购买的 [%s] 库存只剩 %d 件", productItem.getProductName(), actuallyNum));
 			}
+			productItem.setProductNum(actuallyNum - buyNum);
 			detailPo.setProductName(productItem.getProductName());
 			detailPo.setProductUnit(productItem.getProductUnit());
 			BigDecimal productPrice = productItem.getProductPrice();

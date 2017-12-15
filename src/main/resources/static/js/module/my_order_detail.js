@@ -1,6 +1,22 @@
 
-function initData(order, totalPrice, statusStr, details) {
+function initData(order) {
+	var details = order.details;
+	var statusStr = order.status;
+	var totalPrice = order.totalPrice;
+	var status = order.orderStatus;
+	var statusStr = '未知';
 
+	if (status === 1) {
+		statusStr = '已下单';
+	} else if (status === 2) {
+		statusStr = '出货中';
+	} else if (status === 3) {
+		statusStr = '配送中';
+	} else if (status === 4) {
+		statusStr = '已到达';
+	} else if (status === 5) {
+		statusStr = '已收货';
+	}
 	for (var i = 0; i < details.length; i++) {
 		var newRow = document.getElementById('tb').insertRow(i);
 		var no = newRow.insertCell(0);
@@ -15,10 +31,15 @@ function initData(order, totalPrice, statusStr, details) {
 
 		prod.innerHTML = detail.productName;
 		var price = detail.unitPrice;
-		unit.innerHTML = price + '/' + detail.productUnit;
+		var productUnit = detail.productUnit;
+		unit.innerHTML = price + ' 元/' + productUnit;
 		var productNum = detail.productNum;
-		num.innerHTML = productNum;
+		var productNumStr = detail.productNum + ' ' + productUnit;
+		num.innerHTML = productNumStr;
 		total.innerHTML = price * productNum;
-		$('#addr').html("<strong>" + order.contacts + "</strong></br>" + order.receivingAddress);
+		
 	}
+	$('#status').html(statusStr);
+	$('#total-price').html('总价: ' + totalPrice + '元');
+	$('#addr').html("<strong>" + order.contacts + "</strong></br>" + order.receivingAddress);
 }

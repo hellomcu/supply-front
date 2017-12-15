@@ -18,8 +18,9 @@ function getMyOrders(num) {
 }
 
 function initData(data) {
+
 	for (var i = 0; i < data.length; i++) {
-		// alert(JSON.stringify(data[i].createTime));
+		
 
 		var newRow = document.getElementById('tb').insertRow(i);
 		var no = newRow.insertCell(0);
@@ -63,7 +64,7 @@ function initData(data) {
 			statusStr = '已收货';
 		}
 		statusCol.innerHTML = statusStr;
-		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order))) + '&totalPrice=' + totalPrice + '&status=' + statusStr + '&details=' + encodeURI(encodeURI(JSON.stringify(details)));
+		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
 		detail.innerHTML = "<button type='button' class='btn btn-success' onclick='javascript:window.location.href=\"my_order_detail.html?" + params + "\"'>查看详情</button>";
 	}
