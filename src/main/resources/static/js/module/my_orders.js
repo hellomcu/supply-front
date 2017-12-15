@@ -6,7 +6,7 @@ function getMyOrders(num) {
 
 	$.myAjax('front/order/my_orders?page=' + num + '&num=100000', 'GET', null,
 			function(data) {
-				alert(JSON.stringify(data.data));
+//				alert(JSON.stringify(data.data));
 
 				if (data.code != 1) {
 					alert(data.message);

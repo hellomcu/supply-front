@@ -13,6 +13,10 @@
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
 
+<script src="js/util.js"></script>
+<script src="js/loading/jquery.mloading.js"></script>
+<link rel="stylesheet" href="js/loading/jquery.mloading.css"
+	type="text/css" />
 <link rel="stylesheet" href="css/style_mendian.css">
 <!--[if !IE]><!-->
 <style>
@@ -117,7 +121,7 @@
 		var id = product.id;
 		var productUnit = product.productUnit;
 
-		toOrder(id, productName, $('#number').val(), unitPrice, productUnit, $('#contact').val(), $('#address').val(), $('#remark').val());
+		toOrder(id, $('#number').val(), $('#contact').val(), $('#address').val(), $('#remark').val());
 	}
 </script>
 

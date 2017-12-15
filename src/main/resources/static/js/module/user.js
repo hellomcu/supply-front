@@ -1,4 +1,3 @@
-
 function userLogin(username, password, userType) {
 
 	var jsonParams = {
@@ -6,8 +5,11 @@ function userLogin(username, password, userType) {
 		"type" : userType,
 		"username" : username
 	};
+
 	$.myAjax('user/user_login', 'POST', JSON.stringify(jsonParams), function(
 			data) {
+		// alert(JSON.stringify(data.data));
+
 		if (data.code === 1) {
 			if (userType === 1) {
 				window.location.href = "./main.jsp";

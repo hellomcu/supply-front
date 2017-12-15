@@ -2,14 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.supply.front.module.product.mapper.ProductMapper">
 
+	<sql id="product_base_column">
+		id as product_id, product_name, product_num, product_price, product_unit
+	</sql>
 
-	<update id="reduceNum">
-		update t_product
-		set
-		product_num = product_num -
-		#{param2}
-		where id = #{param1} AND status
-		= 0
+	<update id="updateProductNum">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			UPDATE t_product
+			<set>
+				product_num=#{item.productNum}
+			</set>
+			WHERE id = #{item.id} AND status = 0
+		</foreach>
 	</update>
 
 	<resultMap id="productResult" type="ProductPo">
@@ -32,29 +37,49 @@
 	<select id="findAll" resultMap="productResult" parameterType="com.supply.entity.PageInfo">
 		SELECT p.id product_id,
 		p.product_name product_name,
-		p.total_num total_num, p.product_num
+		p.total_num
+		total_num, p.product_num
 		product_num,
-		p.product_price product_price, p.product_unit
+		p.product_price product_price,
+		p.product_unit
 		product_unit,
-		p.product_place product_place, p.description description,
+		p.product_place product_place,
+		p.description description,
 		p.create_time create_time,
-		c.id category_id,c.category_name category_name,
-		c2.id parent_id, c2.category_name parent_name
+		c.id
+		category_id,c.category_name category_name,
+		c2.id parent_id,
+		c2.category_name parent_name
 		FROM
-		t_product p LEFT JOIN t_category c ON p.category_id = c.id
+		t_product p LEFT JOIN t_category c ON
+		p.category_id = c.id
 		LEFT JOIN
 		t_category c2 ON c2.id = c.parent_id
 		WHERE p.status = 0 AND
 		c.status = 0
 		AND c2.status = 0
-		ORDER BY p.create_time DESC LIMIT
+		ORDER BY
+		p.create_time DESC LIMIT
 		#{startItemNum}, #{itemNum}
 	</select>
 
 	<select id="findProductNum" resultType="long">
 		SELECT product_num
-		FROM t_product
+		FROM
+		t_product
 		WHERE id = #{id} AND status = 0
 	</select>
 
+
+	<select id="findByIds" resultMap="productResult">
+		SELECT
+		<include refid="product_base_column" />
+		FROM t_product
+		WHERE id IN
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		AND status = 0
+	</select>
 </mapper>

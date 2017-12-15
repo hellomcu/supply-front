@@ -28,7 +28,6 @@ import com.supply.front.entity.dto.OrderDto;
 import com.supply.front.module.order.service.OrderService;
 import com.supply.front.util.WrappedBeanCopier;
 
-import io.jsonwebtoken.Jwt;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -63,9 +62,9 @@ public class OrderController extends BaseController
 			response.setMessage("请先登录");
 			return response;
 		}
-		createOrderDto.setStoreId(loginUser.getStoreId());
 		OrderPo order = WrappedBeanCopier.copyProperties(createOrderDto, OrderPo.class);
-		List<OrderDetailPo> details = WrappedBeanCopier.copyPropertiesOfList(createOrderDto.getOrderDetails(), OrderDetailPo.class);
+		order.setStoreId(loginUser.getStoreId());
+		List<OrderDetailPo> details = WrappedBeanCopier.copyPropertiesOfList(createOrderDto.getDetails(), OrderDetailPo.class);
 		mOrderService.createOrder(order, details);
 		return getResponse();
 	}

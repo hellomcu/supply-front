@@ -1,3 +1,4 @@
+
 function getQueryString(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
 	var r = window.location.search.substr(1).match(reg);
@@ -13,17 +14,16 @@ $.extend($, {
 	myAjax : function(url, method, body, callback) {
 		$.ajax({
 			url : url,
+			contentType: "application/json",
 			data : body,
 			dataType : 'json',
 			method : method,
 			cache : false,
 			beforeSend : function() {
 				$("body").mLoading("show");
-				//showLoading();// 打开加载层
 			},
 			complete : function() {
 				$("body").mLoading("hide");
-				//closeLoading();// 关闭加载层
 			},
 			success : function(data) {
 				if (typeof callback != 'undefined')

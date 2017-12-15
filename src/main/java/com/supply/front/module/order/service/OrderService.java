@@ -10,7 +10,7 @@ import com.supply.entity.po.OrderPo;
 public interface OrderService extends BaseService
 {
 
-	void createOrder(OrderPo order, List<OrderDetailPo> orderDetails);
+	void createOrder(OrderPo order, List<OrderDetailPo> detailParams);
 
 	
 	List<OrderPo> findMyOrders(PageInfo page, long storeId);
