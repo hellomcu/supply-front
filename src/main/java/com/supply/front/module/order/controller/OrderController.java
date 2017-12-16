@@ -51,10 +51,6 @@ public class OrderController extends BaseController
 	@ApiOperation(httpMethod = "POST", value = "创建订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public BaseResponse<Void> createOrder(@RequestBody @Valid CreateOrderDto createOrderDto, BindingResult result, HttpServletRequest request)
 	{
-		if (result.hasErrors())
-		{
-			throw new SupplyException(result.getFieldError().getDefaultMessage());
-		}
 		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
 		if (loginUser == null)
 		{
@@ -62,6 +58,11 @@ public class OrderController extends BaseController
 			response.setMessage("请先登录");
 			return response;
 		}
+		if (result.hasErrors())
+		{
+			throw new SupplyException(result.getFieldError().getDefaultMessage());
+		}
+		
 		OrderPo order = WrappedBeanCopier.copyProperties(createOrderDto, OrderPo.class);
 		order.setStoreId(loginUser.getStoreId());
 		List<OrderDetailPo> details = WrappedBeanCopier.copyPropertiesOfList(createOrderDto.getDetails(), OrderDetailPo.class);
