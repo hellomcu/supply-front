@@ -13,7 +13,7 @@
 
 
 	<select id="findOneByUsernameAndType" resultType="UserPo">
-		SELECT id, store_id, username, password
+		SELECT id, store_id, password
 		FROM t_user
 		WHERE username = #{param1} AND user_type = #{param2} AND status = 0
 	</select>
