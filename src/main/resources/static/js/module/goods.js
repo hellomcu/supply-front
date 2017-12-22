@@ -1,6 +1,6 @@
-function getGoods(num) {
+function getGoods(page) {
 
-	$.myAjax('front/product/products?page=' + num + '&num=10', 'GET', null,
+	$.myAjax('front/product/products?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
@@ -14,7 +14,8 @@ function getGoods(num) {
 }
 
 function initData(data) {
-	for (var i = 0; i < data.length; i++) {
+	var list = data.list;
+	for (var i = 0; i < list.length; i++) {
 		// alert(JSON.stringify(data[i].createTime));
 
 		var x = document.getElementById('tb').insertRow(i);
@@ -24,17 +25,34 @@ function initData(data) {
 		var a = x.insertCell(2);
 		// var b = x.insertCell(3);
 		var c = x.insertCell(3);
-		y.innerHTML = data[i].productName;
-		z.innerHTML = data[i].productPlace;
+		y.innerHTML = list[i].productName;
+		z.innerHTML = list[i].productPlace;
 
-		a.innerHTML = data[i].productPrice + "/" + data[i].productUnit;
+		a.innerHTML = list[i].productPrice + "/" + list[i].productUnit;
 		// b.innerHTML = data[i].productUnit;
 
 		// c.innerHTML = "<input type='button' value='立即购买'
 		// onclick='createOrder(" + JSON.stringify(data[i]) + ");' />";
 		c.innerHTML = "<button type='button' class='btn btn-success' onclick='createOrder("
-				+ JSON.stringify(data[i]) + ");'>立即购买</button>";
+				+ JSON.stringify(list[i]) + ");'>立即购买</button>";
 	}
+	
+	
+	var totalPage = data.totalPage;
+	$('#pagination').pagination({
+        items: data.totalPage,
+        itemOnPage: data.itemNum,
+        currentPage: data.currentPage,
+        cssStyle: '',
+        prevText: '上一页',
+        nextText: '下一页',
+        onInit: function () {
+            // fire first page loading
+        },
+        onPageClick: function (page, evt) {
+        	getGoods(page);
+        }
+    });
 }
 
 function createOrder(obj) {

@@ -9,7 +9,7 @@ import com.supply.entity.po.ProductPo;
 public interface ProductService extends BaseService
 {
 
-	List<ProductPo> findProducts(PageInfo page);
+	PageInfo<ProductPo> findProducts(PageInfo page, String productName);
 	
 
 }

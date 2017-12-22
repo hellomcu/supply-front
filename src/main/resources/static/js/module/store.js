@@ -28,7 +28,7 @@ function addStore(storeName, storeAddress, callNumber, userName, passWord,
 	});
 }
 
-function getStore(num) {
+function getStore(page) {
 
 	/*
 	 * var jsonParams = { "page" : num, "num" : 10,
@@ -36,7 +36,7 @@ function getStore(num) {
 	 */
 
 	$.ajax({
-		url : 'admin/store/stores?page=' + num + '&num=10',
+		url : 'admin/store/stores?page=' + page + '&num=10',
 		// contentType : "application/json; charset=utf-8",
 		// data : JSON.stringify(jsonParams),
 		type : 'get',
@@ -58,7 +58,8 @@ function getStore(num) {
 }
 
 function initData(data) {
-	for (var i = 0; i < data.length; i++) {
+	var list = data.list;
+	for (var i = 0; i < list.length; i++) {
 //alert(JSON.stringify(data[i].createTime));
 		
 		 var x=document.getElementById('myTable').insertRow(i+1)
@@ -69,13 +70,30 @@ function initData(data) {
 		  var b=x.insertCell(3)
 		  var c=x.insertCell(4)
 		  y.innerHTML=i+1
-		  z.innerHTML='<a href="http://www.baidu.com">'+data[i].storeName+'</a>'
+		  z.innerHTML='<a href="http://www.baidu.com">'+list[i].storeName+'</a>'
 		  
-		  a.innerHTML=data[i].storePlace
-		  b.innerHTML=data[i].contacts
+		  a.innerHTML=list[i].storePlace
+		  b.innerHTML=list[i].contacts
 		  
-		  c.innerHTML='<input type="button" value="删除" onclick="deleteStore('+data[i].id+')"/>'
+		  c.innerHTML='<input type="button" value="删除" onclick="deleteStore('+list[i].id+')"/>'
 	}
+	
+	var totalPage = data.totalPage;
+	$('#pagination').pagination({
+        items: data.totalPage,
+        itemOnPage: data.itemNum,
+        currentPage: data.currentPage,
+        cssStyle: '',
+        prevText: '上一页',
+        nextText: '下一页',
+        onInit: function () {
+            // fire first page loading
+        },
+        onPageClick: function (page, evt) {
+        	getStore(page);
+//            $('#alt-style-pagination-content').text('Page ' + page);
+        }
+    });
 }
 function deleteStore(id) {
 	var r=confirm("要删除它吗？");

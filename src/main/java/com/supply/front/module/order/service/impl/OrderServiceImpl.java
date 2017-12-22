@@ -150,8 +150,16 @@ public class OrderServiceImpl implements OrderService
 	}
 
 	@Override
-	public List<OrderPo> findMyOrders(PageInfo page, long storeId)
+	public PageInfo<OrderPo> findMyOrders(PageInfo page, long storeId)
 	{
-		return orderMapper.findByStoreId(storeId, page);
+		PageInfo<OrderPo> result = new PageInfo<>();
+		List<OrderPo> list = orderMapper.findByStoreId(storeId, page);
+		long count = orderMapper.count(storeId);
+		result.setList(list);
+		result.setTotalNum(count);
+		result.setItemNum(page.getItemNum());
+		result.setTotalPage(result.calcTotalPage());
+		result.setCurrentPage(page.getCurrentPage());
+		return result;
 	}
 }

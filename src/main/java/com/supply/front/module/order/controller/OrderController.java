@@ -72,7 +72,7 @@ public class OrderController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取我的订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@GetMapping(value="/my_orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<OrderDto>> findMyOrders(@RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
+	public BaseResponse<PageInfo<OrderDto>> findMyOrders(@RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
 	{
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(page);
@@ -83,19 +83,29 @@ public class OrderController extends BaseController
 		UserPo loginUser = JwtUtil.getLoginUserFromJwt(request);
 		if (loginUser == null)
 		{
-			BaseResponse<List<OrderDto>> response = new BaseResponse<>();
+			BaseResponse<PageInfo<OrderDto>> response = new BaseResponse<>();
 			response.setMessage("请先登录");
 			return response;
 		}
-		List<OrderPo> orders = mOrderService.findMyOrders(pageInfo, loginUser.getStoreId());
+		
+		pageInfo.setCurrentPage(page);
+		pageInfo.setItemNum(num);
+		PageInfo<OrderPo> orderPos = mOrderService.findMyOrders(pageInfo, loginUser.getStoreId());
+		PageInfo<OrderDto> result = new PageInfo<OrderDto>();
+		result.setCurrentPage(orderPos.getCurrentPage());
+		result.setTotalNum(orderPos.getTotalNum());
+		result.setTotalPage(orderPos.getTotalPage());
+		result.setItemNum(orderPos.getItemNum());
+		result.setList(WrappedBeanCopier.copyPropertiesOfList(orderPos.getList(), OrderDto.class));
+		return getResponse(result);
+		
 //		for (OrderPo key: map.keySet())
 //		{
 //			OrderDto order = WrappedBeanCopier.copyProperties(key, OrderDto.class);
 //			order.setDetails(WrappedBeanCopier.copyPropertiesOfList(map.get(key), OrderDetailDto.class));
 //			list.add(order);
 //		}
-		
-		return getResponse(WrappedBeanCopier.copyPropertiesOfList(orders, OrderDto.class));
+
 	}
 	
 }

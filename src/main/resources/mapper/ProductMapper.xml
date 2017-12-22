@@ -34,7 +34,7 @@
 	</resultMap>
 
 	<!--resultType：如果返回的是一个集合，要写集合中元素的类型 -->
-	<select id="findAll" resultMap="productResult" parameterType="com.supply.entity.PageInfo">
+	<select id="findAll" resultMap="productResult" >
 		SELECT p.id product_id,
 		p.product_name product_name,
 		p.total_num
@@ -57,10 +57,10 @@
 		t_category c2 ON c2.id = c.parent_id
 		WHERE p.status = 0 AND
 		c.status = 0
-		AND c2.status = 0
+		AND c2.status = 0 AND p.product_name LIKE '%#{productName}%'
 		ORDER BY
 		p.create_time DESC LIMIT
-		#{startItemNum}, #{itemNum}
+		#{page.startItemNum}, #{page.itemNum}
 	</select>
 
 	<select id="findProductNum" resultType="long">
@@ -81,5 +81,17 @@
 			#{item}
 		</foreach>
 		AND status = 0
+	</select>
+	
+	
+	<select id="count" resultType="long">
+		SELECT COUNT(id)
+		FROM
+		t_product
+		WHERE status = 0 
+		<if test="productName != null and productName !=''" >  
+        	AND product_name LIKE '%#{productName}%' 
+        </if>  
+		
 	</select>
 </mapper>

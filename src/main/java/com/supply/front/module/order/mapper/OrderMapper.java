@@ -18,4 +18,6 @@ public interface OrderMapper extends Repository
 	int saveDetails(@Param("orderId")long orderId, @Param("details")List<OrderDetailPo> details);
 	
 	List<OrderPo> findByStoreId(@Param("storeId")long storeId, @Param("page")PageInfo page);
+	
+	long count(@Param("storeId")long storeId);
 }

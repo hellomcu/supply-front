@@ -79,4 +79,9 @@
 		ORDER BY o.create_time DESC
 	</select>
 
+	<select id="count" resultType="long">
+		SELECT COUNT(id) FROM t_order
+		WHERE status = 0 AND store_id=#{storeId}
+	</select>
+
 </mapper>

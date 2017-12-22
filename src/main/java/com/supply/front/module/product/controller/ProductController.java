@@ -1,7 +1,5 @@
 package com.supply.front.module.product.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,14 +36,19 @@ public class ProductController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取所有产品", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@GetMapping(value="/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<List<ProductDto>> findAllProducts( @RequestParam("page") long page, @RequestParam("num") int num)
+	public BaseResponse<PageInfo<ProductDto>> findAllProducts(@RequestParam("page") long page, @RequestParam("num") int num, @RequestParam(value="productName", required=false) String productName)
 	{
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
-
-		List<ProductPo> products = mProductService.findProducts(pageInfo);
-		return getResponse(WrappedBeanCopier.copyPropertiesOfList(products, ProductDto.class));
+		PageInfo<ProductPo> orderPos = mProductService.findProducts(pageInfo, productName);
+		PageInfo<ProductDto> result = new PageInfo<ProductDto>();
+		result.setCurrentPage(orderPos.getCurrentPage());
+		result.setTotalNum(orderPos.getTotalNum());
+		result.setTotalPage(orderPos.getTotalPage());
+		result.setItemNum(orderPos.getItemNum());
+		result.setList(WrappedBeanCopier.copyPropertiesOfList(orderPos.getList(), ProductDto.class));
+		return getResponse(result);
 	}
 	
 
