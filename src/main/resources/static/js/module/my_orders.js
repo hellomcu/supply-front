@@ -1,10 +1,10 @@
-function getMyOrders(num) {
+function getMyOrders(page) {
 
 	/*
 	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
-	$.myAjax('front/order/my_orders?page=' + num + '&num=100000', 'GET', null,
+	$.myAjax('front/order/my_orders?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 //				alert(JSON.stringify(data.data));
 
@@ -18,10 +18,14 @@ function getMyOrders(num) {
 }
 
 function initData(data) {
-
-	for (var i = 0; i < data.length; i++) {
+	var list = data.list;
+	var tbody = document.getElementById('tb');
+	$(tbody).empty();
+	for (var i = 0; i < list.length; i++) {
 		
-
+		
+		var newRow = tbody.insertRow(i);
+		
 		var newRow = document.getElementById('tb').insertRow(i);
 		var no = newRow.insertCell(0);
 		var prod = newRow.insertCell(1);
@@ -31,7 +35,7 @@ function initData(data) {
 		var detail = newRow.insertCell(5);
 
 		no.innerHTML = i + 1;
-		var order = data[i];
+		var order = list[i];
 		var details = order.details;
 		
 		var nameStr = "";
@@ -68,6 +72,22 @@ function initData(data) {
 
 		detail.innerHTML = "<button type='button' class='btn btn-success' onclick='javascript:window.location.href=\"my_order_detail.html?" + params + "\"'>查看详情</button>";
 	}
+	
+	var totalPage = data.totalPage;
+	$('#pagination').pagination({
+        items: data.totalPage,
+        itemOnPage: data.itemNum,
+        currentPage: data.currentPage,
+        cssStyle: '',
+        prevText: '上一页',
+        nextText: '下一页',
+        onInit: function () {
+            // fire first page loading
+        },
+        onPageClick: function (page, evt) {
+        	getMyOrders(page);
+        }
+    });
 }
 
 function getMyOrderDetail(order, products) {
