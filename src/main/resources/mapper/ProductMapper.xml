@@ -60,7 +60,7 @@
 		AND c2.status = 0 AND p.product_name LIKE '%#{productName}%'
 		ORDER BY
 		p.create_time DESC LIMIT
-		#{page.startItemNum}, #{page.itemNum}
+		#{page.itemNum}, #{page.itemNum}
 	</select>
 
 	<select id="findProductNum" resultType="long">
