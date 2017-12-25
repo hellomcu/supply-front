@@ -15,16 +15,21 @@ function getGoods(page) {
 
 function initData(data) {
 	var list = data.list;
+	var tbody = document.getElementById('tb');
+	
+	$(tbody).empty();
 	for (var i = 0; i < list.length; i++) {
 		// alert(JSON.stringify(data[i].createTime));
 
-		var x = document.getElementById('tb').insertRow(i);
-		var y = x.insertCell(0);
-		var z = x.insertCell(1);
+		
+		var newRow = tbody.insertRow(i);
+		
+		var y = newRow.insertCell(0);
+		var z = newRow.insertCell(1);
 
-		var a = x.insertCell(2);
+		var a = newRow.insertCell(2);
 		// var b = x.insertCell(3);
-		var c = x.insertCell(3);
+		var c = newRow.insertCell(3);
 		y.innerHTML = list[i].productName;
 		z.innerHTML = list[i].productPlace;
 

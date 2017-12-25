@@ -57,10 +57,13 @@
 		t_category c2 ON c2.id = c.parent_id
 		WHERE p.status = 0 AND
 		c.status = 0
-		AND c2.status = 0 AND p.product_name LIKE '%#{productName}%'
+		AND c2.status = 0 
+		<if test="productName != null and productName !=''" >  
+			AND p.product_name LIKE CONCAT('%',#{productName},'%')
+		</if>
 		ORDER BY
-		p.create_time DESC LIMIT
-		#{page.itemNum}, #{page.itemNum}
+		p.create_time DESC 
+		LIMIT #{page.startItemNum}, #{page.itemNum}
 	</select>
 
 	<select id="findProductNum" resultType="long">
@@ -90,7 +93,7 @@
 		t_product
 		WHERE status = 0 
 		<if test="productName != null and productName !=''" >  
-        	AND product_name LIKE '%#{productName}%' 
+        	AND product_name LIKE CONCAT('%',#{productName},'%')
         </if>  
 		
 	</select>
