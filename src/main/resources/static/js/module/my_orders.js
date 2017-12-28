@@ -70,7 +70,7 @@ function initData(data) {
 		statusCol.innerHTML = statusStr;
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
-		detail.innerHTML = "<button type='button' class='btn btn-success' onclick='javascript:window.location.href=\"my_order_detail.html?" + params + "\"'>查看详情</button>";
+		detail.innerHTML = "<button type='button' class='btn btn-success btn-flat' onclick='javascript:window.location.href=\"my_order_detail.html?" + params + "\"'>查看详情</button>";
 	}
 	
 	var totalPage = data.totalPage;

@@ -55,6 +55,7 @@ public class OrderController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<Void> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}
@@ -84,6 +85,7 @@ public class OrderController extends BaseController
 		if (loginUser == null)
 		{
 			BaseResponse<PageInfo<OrderDto>> response = new BaseResponse<>();
+			response.setCode(100);
 			response.setMessage("请先登录");
 			return response;
 		}

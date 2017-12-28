@@ -23,13 +23,13 @@ function initData(data) {
 
 		
 		var newRow = tbody.insertRow(i);
-		
-		var y = newRow.insertCell(0);
-		var z = newRow.insertCell(1);
+		newRow.insertCell(0).innerHTML = i + 1;
+		var y = newRow.insertCell(1);
+		var z = newRow.insertCell(2);
 
-		var a = newRow.insertCell(2);
+		var a = newRow.insertCell(3);
 		// var b = x.insertCell(3);
-		var c = newRow.insertCell(3);
+		var c = newRow.insertCell(4);
 		y.innerHTML = list[i].productName;
 		z.innerHTML = list[i].productPlace;
 
@@ -38,7 +38,7 @@ function initData(data) {
 
 		// c.innerHTML = "<input type='button' value='立即购买'
 		// onclick='createOrder(" + JSON.stringify(data[i]) + ");' />";
-		c.innerHTML = "<button type='button' class='btn btn-success' onclick='createOrder("
+		c.innerHTML = "<button type='button' class='btn btn-success btn-flat' onclick='createOrder("
 				+ JSON.stringify(list[i]) + ");'>立即购买</button>";
 	}
 	
@@ -62,7 +62,7 @@ function initData(data) {
 
 function createOrder(obj) {
 
-	window.location.href = "../create_order.html?product="
+	window.location.href = "./create_order.html?product="
 			+ encodeURI(encodeURI(JSON.stringify(obj)));
 
 	// var c = document.getElementById("in"+data).value;

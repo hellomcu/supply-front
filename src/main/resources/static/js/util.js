@@ -26,6 +26,9 @@ $.extend($, {
 				$("body").mLoading("hide");
 			},
 			success : function(data) {
+				if (data.code === 100) {
+					window.location.href = 'login.html';
+				}
 				if (typeof callback != 'undefined')
 					callback.call(this, data);
 			},
