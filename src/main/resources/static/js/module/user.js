@@ -6,15 +6,13 @@ function userLogin(username, password, userType) {
 		"username" : username
 	};
 
-	$.myAjax('user/user_login', 'POST', JSON.stringify(jsonParams), function(
+	$.myAjax('../user/user_login', 'POST', JSON.stringify(jsonParams), function(
 			data) {
 		// alert(JSON.stringify(data.data));
 
 		if (data.code === 1) {
-			if (userType === 1) {
-				window.location.href = "./main.jsp";
-			} else if (userType === 2) {
-				window.location.href = "./getGoods.html";
+			if (userType === 2) {
+				window.location.href = "./home.html";
 			} else {
 				alert("用户身份错误");
 			}

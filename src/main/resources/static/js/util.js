@@ -35,3 +35,39 @@ $.extend($, {
 		});
 	}
 });
+
+function loadPage(page, callback) {
+	$.ajax({ 
+		   type: "GET", 
+		   url: page, 
+		   cache:false, 
+		   async:false, 
+		   dataType: "html", 
+		   success: function(html){ 
+			   if (callback != null) {
+				   callback(html);
+			   }
+			   
+		   }
+	});
+}
+
+function loadHeader() {
+	loadPage('header.html', function(html) {
+		$('#header').html(html);
+	});
+}
+
+function loadFooter() {
+	$('#footer-container').load('footer.html');
+}
+
+function loadNav() {
+	loadPage('nav.html', function(html) {
+		$('#nav').html(html);
+	});
+}
+
+function navActive(obj) {
+	obj.addClass('active');
+}

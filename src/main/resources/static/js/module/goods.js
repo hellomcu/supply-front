@@ -1,6 +1,6 @@
 function getGoods(page) {
 
-	$.myAjax('front/product/products?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('../front/product/products?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 				// alert(JSON.stringify(data.data));
 
@@ -62,7 +62,7 @@ function initData(data) {
 
 function createOrder(obj) {
 
-	window.location.href = "./create_order.html?product="
+	window.location.href = "../create_order.html?product="
 			+ encodeURI(encodeURI(JSON.stringify(obj)));
 
 	// var c = document.getElementById("in"+data).value;
