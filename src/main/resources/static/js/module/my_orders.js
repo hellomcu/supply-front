@@ -4,7 +4,7 @@ function getMyOrders(page) {
 	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
-	$.myAjax('../front/order/my_orders?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('./front/order/my_orders?page=' + page + '&num=10', 'GET', null,
 			function(data) {
 //				alert(JSON.stringify(data.data));
 

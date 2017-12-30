@@ -20,6 +20,7 @@ public class OrderDto extends BaseDto
 	private int productNum;
 	private int totalNum;
 	private String contacts;
+	private String receiver;
 	private String receivingAddress;
 	private OrderStatus orderStatus;
 	private List<OrderDetailDto> details;
@@ -106,6 +107,14 @@ public class OrderDto extends BaseDto
 	public void setReceivingAddress(String receivingAddress)
 	{
 		this.receivingAddress = receivingAddress;
+	}
+	public String getReceiver()
+	{
+		return receiver;
+	}
+	public void setReceiver(String receiver)
+	{
+		this.receiver = receiver;
 	}
 	
 }

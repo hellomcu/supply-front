@@ -41,5 +41,5 @@ function initData(order) {
 	}
 	$('#status').html(statusStr);
 	$('#total-price').html('总价: ' + totalPrice + '元');
-	$('#addr').html("<strong>" + order.contacts + "</strong></br>" + order.receivingAddress);
+	$('#addr').html("<strong>" + order.receiver + "<br/>" + order.contacts + "</strong></br>" + order.receivingAddress);
 }

@@ -6,7 +6,7 @@ function userLogin(username, password, userType) {
 		"username" : username
 	};
 
-	$.myAjax('../user/user_login', 'POST', JSON.stringify(jsonParams), function(
+	$.myAjax('./user/user_login', 'POST', JSON.stringify(jsonParams), function(
 			data) {
 		// alert(JSON.stringify(data.data));
 
@@ -16,6 +16,23 @@ function userLogin(username, password, userType) {
 			} else {
 				alert("用户身份错误");
 			}
+		} else {
+			alert(data.message);
+		}
+	});
+
+}
+
+
+function userLogout() {
+
+
+	$.myAjax('./user/user_logout', 'DELETE', null, function(
+			data) {
+
+		if (data.code === 1) {
+			window.location.href = "./login.html";
+	
 		} else {
 			alert(data.message);
 		}
