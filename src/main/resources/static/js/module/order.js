@@ -1,4 +1,4 @@
-function toOrder(id, productNum, contact, address, remark) {
+function toOrder(id, productNum, receiver, contact, address, remark) {
 
 	var jsonParams = {
 		"contacts" : contact,
@@ -7,12 +7,13 @@ function toOrder(id, productNum, contact, address, remark) {
 			"productNum" : productNum
 		} ],
 		"orderRemark" : remark,
+		"receiver" : receiver,
 		"receivingAddress" : address
 	};
-	$.myAjax('front/order', 'POST', JSON.stringify(jsonParams), function(data) {
+	$.myAjax('./front/order', 'POST', JSON.stringify(jsonParams), function(data) {
 		if (data.code == 1) {
 			alert("下单成功");
-			window.location.href = "./getGoods.html";
+			window.location.href = "./my_orders.html";
 		} else {
 			alert(data.message);
 		}
@@ -20,7 +21,7 @@ function toOrder(id, productNum, contact, address, remark) {
 
 }
 function getOrder(id, num) {
-	$.myAjax('front/order/my_orders?page=' + num + '&num=10&store_id=' + id,
+	$.myAjax('./front/order/my_orders?page=' + num + '&num=10&store_id=' + id,
 			'GET', JSON.stringify(jsonParams), function(data) {
 				alert(JSON.stringify(data.data));
 			});

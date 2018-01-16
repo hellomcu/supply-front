@@ -428,7 +428,7 @@ html {
 .content input:focus,
 .content select:focus,
 .content textarea:not([class^="cke"]):focus {
-  border-color: #66afe9;
+  border-color: #00a65a;
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08), 0 0 8px #93c6ef;
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08), 0 0 8px #93c6ef;
@@ -677,7 +677,7 @@ body input.button-a:hover {
 body a.button-a:focus,
 body button.button-a:focus,
 body input.button-a:focus {
-  border-color: #66afe9;
+  border-color: #00a65a;
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #93c6ef;
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #93c6ef;

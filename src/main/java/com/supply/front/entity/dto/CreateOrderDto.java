@@ -23,6 +23,9 @@ public class CreateOrderDto extends BaseDto
 	@NotBlank(message = "请填写收货地址")
 	private String receivingAddress;
 	
+	@NotBlank(message = "请填写收货人")
+	private String receiver;
+	
 	@Length(min = 11, message = "请正确填写联系方式")
 	private String contacts;
 	
@@ -70,6 +73,16 @@ public class CreateOrderDto extends BaseDto
 	public void setDetails(List<CreateOrderProductDetailDto> details)
 	{
 		this.details = details;
+	}
+
+	public String getReceiver()
+	{
+		return receiver;
+	}
+
+	public void setReceiver(String receiver)
+	{
+		this.receiver = receiver;
 	}
 
 }

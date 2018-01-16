@@ -1,5 +1,7 @@
 package com.supply.front.module.user.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class UserController extends BaseController
 	
 	@RequestMapping(method = RequestMethod.POST, value="/user_login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ApiOperation(httpMethod = "POST", value = "用户登录", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<Void> userLogin(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response)
+	public BaseResponse<Void> userLogin(@RequestBody UserLoginDto userLoginDto, HttpServletRequest request, HttpServletResponse response)
 	{
 		String username = userLoginDto.getUsername();
 		UserPo userPo = mUserService.userLogin(username, userLoginDto.getPassword(), userLoginDto.getType());
@@ -51,11 +53,24 @@ public class UserController extends BaseController
 //        response.setHeader("Access-Control-Allow-Headers", "DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,SessionToken");  
 //         // 允许跨域请求中携带cookie  
 //        response.setHeader("Access-Control-Allow-Credentials", "true"); 
-
-		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=/; HttpOnly");
-		response.addHeader("Set-Cookie", "username=" + userPo.getUsername()+ "; Path=/");
+		String contextPath = request.getContextPath();
+		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=" + contextPath + "; HttpOnly");
+		response.addHeader("Set-Cookie", "username=" + userPo.getUsername() + "; Path="  + contextPath);
 		return getResponse();
 	}
 	
-
+	@RequestMapping(method = RequestMethod.DELETE, value="/user_logout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(httpMethod = "DELETE", value = "用户退出", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public BaseResponse<Void> userLogout(HttpServletRequest request, HttpServletResponse response)
+	{
+		request.getSession().removeAttribute("JSESSIONID");
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies)
+		{
+			cookie.setMaxAge(0);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+		return getResponse();
+	}
 }

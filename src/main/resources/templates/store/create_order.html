@@ -10,7 +10,7 @@
 	name="viewport">
 <!-- Bootstrap 3.3.7 -->
 <link rel="stylesheet"
-	href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+	href="./bower_components/bootstrap/dist/css/bootstrap.css">
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="./bower_components/font-awesome/css/font-awesome.min.css">
@@ -18,11 +18,23 @@
 <link rel="stylesheet"
 	href="./bower_components/Ionicons/css/ionicons.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="./dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="./dist/css/AdminLTE.css">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="./dist/css/skins/_all-skins.min.css">
-<link rel="stylesheet" href="../js/loading/jquery.mloading.css" />
+<link rel="stylesheet" href="./js/loading/jquery.mloading.css" />
+
+<style type="text/css">
+	.w2 {  
+		letter-spacing:2em; /*如果需要y个字两端对齐，则为(x-y)/(y-1),这里是（4-2）/(2-1)=2em */  
+		margin-right:-2em; /*同上*/  
+	}  
+	.w3 {  
+		letter-spacing:0.5em; /*如果需要y个字两端对齐，则为(x-y)/(y-1),这里是（4-3）/(3-1)=0.5em */  
+		margin-right:-0.5em; /*同上*/  
+	}  
+</style> 
+</style>
 
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -86,6 +98,12 @@
 								</div>
 								<div class="form-group">
 									<div class="input-group ">
+										<div class="input-group-addon  success">收&ensp;货&ensp;人</div>
+										<input class="form-control" id="receiver" placeholder="输入收货人" />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group ">
 										<div class="input-group-addon  success">联系方式</div>
 										<input class="form-control" id="contact" placeholder="输入联系方式" />
 									</div>
@@ -139,7 +157,7 @@
 	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- FastClick -->
 	<script src="./bower_components/fastclick/lib/fastclick.js"></script>
-	<script src="../js/util.js"></script>
+	<script src="./js/util.js"></script>
 	<script type="text/javascript">
 		loadHeader();
 		loadFooter();
@@ -151,8 +169,8 @@
 	<script src="./dist/js/adminlte.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="./dist/js/demo.js"></script>
-	<script src="../js/loading/jquery.mloading.js"></script>
-	<script type="text/javascript" src="../js/module/order.js"></script>
+	<script src="./js/loading/jquery.mloading.js"></script>
+	<script src="./js/module/order.js"></script>
 	<!-- Page-Level Demo Scripts - Forms - Use for reference -->
 	<script type="text/javascript">
 		function toSubmit() {
@@ -163,7 +181,7 @@
 			var id = product.id;
 			var productUnit = product.productUnit;
 
-			toOrder(id, $('#number').val(), $('#contact').val(), $('#address')
+			toOrder(id, $('#number').val(), $('#receiver').val(), $('#contact').val(),  $('#address')
 					.val(), $('#remark').val());
 		}
 
