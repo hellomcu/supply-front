@@ -38,8 +38,9 @@ function initData(data) {
 
 		// c.innerHTML = "<input type='button' value='立即购买'
 		// onclick='createOrder(" + JSON.stringify(data[i]) + ");' />";
-		c.innerHTML = "<button type='button' class='btn btn-warning btn-flat' onclick='createOrder("
-				+ JSON.stringify(list[i]) + ");'>立即购买</button>";
+		c.innerHTML = list[i].productNum + "&nbsp;件";
+//		c.innerHTML = "<button type='button' class='btn btn-warning btn-flat' onclick='createOrder("
+//				+ JSON.stringify(list[i]) + ");'>立即购买</button>";
 	}
 	
 	

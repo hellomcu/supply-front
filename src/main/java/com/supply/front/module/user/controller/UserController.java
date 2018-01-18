@@ -56,6 +56,7 @@ public class UserController extends BaseController
 		String contextPath = request.getContextPath();
 		response.addHeader("Set-Cookie", ServerConfig.TOKEN_HEADER + "=" + jwt + "; Path=" + contextPath + "; HttpOnly");
 		response.addHeader("Set-Cookie", "username=" + userPo.getUsername() + "; Path="  + contextPath);
+		response.addHeader("Set-Cookie", "balance=" + userPo.getBalance().toString() + "; Path="  + contextPath);
 		return getResponse();
 	}
 	

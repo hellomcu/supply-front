@@ -13,9 +13,11 @@
 
 
 	<select id="findOneByUsernameAndType" resultType="UserPo">
-		SELECT id, store_id, password
-		FROM t_user
-		WHERE username = #{param1} AND user_type = #{param2} AND status = 0
+		SELECT u.id id, u.store_id store_id, u.password password, s.balance balance
+		FROM t_user u
+		LEFT JOIN t_store s
+		ON u.store_id = s.id
+		WHERE u.username = #{param1} AND u.user_type = #{param2} AND u.status = 0 AND s.status = 0
 	</select>
 
 </mapper>
