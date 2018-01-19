@@ -32,7 +32,8 @@ function initData(data) {
 		var num = newRow.insertCell(2);
 		var total = newRow.insertCell(3);
 		var statusCol = newRow.insertCell(4);
-		var detail = newRow.insertCell(5);
+		var time = newRow.insertCell(5);
+		var detail = newRow.insertCell(6);
 
 		no.innerHTML = i + 1;
 		var order = list[i];
@@ -67,6 +68,8 @@ function initData(data) {
 		} else if (status === 5) {
 			statusStr = '已收货';
 		}
+		
+		time.innerHTML = order.createTime;
 		statusCol.innerHTML = statusStr;
 		var params = 'order=' + encodeURI(encodeURI(JSON.stringify(order)));
 
