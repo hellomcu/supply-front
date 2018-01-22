@@ -1,5 +1,6 @@
 package com.supply.front.module.order.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.supply.base.service.BaseService;
@@ -13,5 +14,5 @@ public interface OrderService extends BaseService
 	void createOrder(OrderPo order, List<OrderDetailPo> detailParams);
 
 	
-	PageInfo<OrderPo> findMyOrders(PageInfo page, long storeId);
+	PageInfo<OrderPo> findMyOrders(PageInfo<Void> page, long storeId, Timestamp createTime);
 }

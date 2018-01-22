@@ -75,8 +75,11 @@
 		AND o.id IN(
 		SELECT t.id
 		FROM (SELECT id FROM t_order WHERE t_order.store_id = #{storeId}
-		AND
-		t_order.status = 0 LIMIT #{page.startItemNum}, #{page.itemNum})AS
+    	<if test="createTime != null">  
+		AND t_order.create_time = #{createTime}
+		</if>
+		AND t_order.status = 0
+		LIMIT #{page.startItemNum}, #{page.itemNum})AS
 		t)
 		ORDER BY o.create_time DESC
 	</select>

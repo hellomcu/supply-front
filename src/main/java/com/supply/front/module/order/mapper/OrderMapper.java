@@ -1,5 +1,6 @@
 package com.supply.front.module.order.mapper;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -17,7 +18,7 @@ public interface OrderMapper extends Repository
 	
 	int saveDetails(@Param("orderId")long orderId, @Param("details")List<OrderDetailPo> details);
 	
-	List<OrderPo> findByStoreId(@Param("storeId")long storeId, @Param("page")PageInfo page);
+	List<OrderPo> findByStoreId(@Param("storeId")long storeId, @Param("createTime") Timestamp createTime, @Param("page")PageInfo<Void> page);
 	
 	long count(@Param("storeId")long storeId);
 }

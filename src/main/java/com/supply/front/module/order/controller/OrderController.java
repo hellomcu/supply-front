@@ -1,5 +1,6 @@
 package com.supply.front.module.order.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,9 +74,9 @@ public class OrderController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取我的订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@GetMapping(value="/my_orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<PageInfo<OrderDto>> findMyOrders(@RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
+	public BaseResponse<PageInfo<OrderDto>> findMyOrders(@RequestParam(value = "createTime", required=false)Timestamp createTime, @RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
 	{
-		PageInfo pageInfo = new PageInfo();
+		PageInfo<Void> pageInfo = new PageInfo<Void>();
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
 
@@ -92,7 +93,7 @@ public class OrderController extends BaseController
 		
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
-		PageInfo<OrderPo> orderPos = mOrderService.findMyOrders(pageInfo, loginUser.getStoreId());
+		PageInfo<OrderPo> orderPos = mOrderService.findMyOrders(pageInfo, loginUser.getStoreId(), createTime);
 		PageInfo<OrderDto> result = new PageInfo<OrderDto>();
 		result.setCurrentPage(orderPos.getCurrentPage());
 		result.setTotalNum(orderPos.getTotalNum());

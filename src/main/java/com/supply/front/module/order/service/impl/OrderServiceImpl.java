@@ -1,6 +1,7 @@
 package com.supply.front.module.order.service.impl;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,10 +151,10 @@ public class OrderServiceImpl implements OrderService
 	}
 
 	@Override
-	public PageInfo<OrderPo> findMyOrders(PageInfo page, long storeId)
+	public PageInfo<OrderPo> findMyOrders(PageInfo<Void> page, long storeId, Timestamp createTime)
 	{
 		PageInfo<OrderPo> result = new PageInfo<>();
-		List<OrderPo> list = orderMapper.findByStoreId(storeId, page);
+		List<OrderPo> list = orderMapper.findByStoreId(storeId, createTime, page);
 		long count = orderMapper.count(storeId);
 		result.setList(list);
 		result.setTotalNum(count);
