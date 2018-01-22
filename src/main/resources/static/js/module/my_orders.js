@@ -56,7 +56,7 @@ function initData(data) {
 
 		var status = order.orderStatus;
 		var statusStr = '未知';
-
+		console.log(status);
 		if (status === 1) {
 			statusStr = '已下单';
 		} else if (status === 2) {

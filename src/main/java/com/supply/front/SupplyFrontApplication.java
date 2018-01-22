@@ -21,13 +21,13 @@ public class SupplyFrontApplication
 		SpringApplication.run(SupplyFrontApplication.class, args);
 	}
 
-	@Bean
-	public ObjectMapper getObjectMapper()
-	{
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_INDEX, true);
-		return objectMapper;
-	}
+//	@Bean
+//	public ObjectMapper getObjectMapper()
+//	{
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_INDEX, true);
+//		return objectMapper;
+//	}
 
 	@Autowired
 	private Environment env;
