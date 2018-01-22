@@ -25,15 +25,16 @@ function initData(data) {
 		var newRow = tbody.insertRow(i);
 		newRow.insertCell(0).innerHTML = i + 1;
 		var y = newRow.insertCell(1);
-		var z = newRow.insertCell(2);
+		//var z = newRow.insertCell(2);
 
-		var a = newRow.insertCell(3);
+		var a = newRow.insertCell(2);
+		var salePrice = newRow.insertCell(3);
 		// var b = x.insertCell(3);
 		var c = newRow.insertCell(4);
 		y.innerHTML = list[i].productName;
-		z.innerHTML = list[i].productPlace;
-
-		a.innerHTML = list[i].productPrice + "/" + list[i].productUnit;
+		//z.innerHTML = list[i].productPlace;
+		salePrice.innerHTML = list[i].salePrice + "元/" + list[i].productUnit;
+		a.innerHTML = list[i].productPrice + "元/" + list[i].productUnit;
 		// b.innerHTML = data[i].productUnit;
 
 		// c.innerHTML = "<input type='button' value='立即购买'

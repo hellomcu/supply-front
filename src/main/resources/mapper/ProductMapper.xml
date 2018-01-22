@@ -3,7 +3,7 @@
 <mapper namespace="com.supply.front.module.product.mapper.ProductMapper">
 
 	<sql id="product_base_column">
-		id as product_id, product_name, product_num, product_price, product_unit
+		id as product_id, product_name, product_num, product_price, sale_price, product_unit
 	</sql>
 
 	<update id="updateProductNum">
@@ -23,6 +23,7 @@
 		<result property="totalNum" column="total_num" />
 		<result property="productNum" column="product_num" />
 		<result property="productPrice" column="product_price" />
+		<result property="salePrice" column="sale_price" />
 		<result property="productUnit" column="product_unit" />
 		<result property="productPlace" column="product_place" />
 		<result property="description" column="description" />
@@ -41,6 +42,7 @@
 		total_num, p.product_num
 		product_num,
 		p.product_price product_price,
+		p.sale_price sale_price,
 		p.product_unit
 		product_unit,
 		p.product_place product_place,
