@@ -76,8 +76,12 @@ function initData(data) {
 		detail.innerHTML = "<button type='button' class='btn btn-success btn-flat' onclick='javascript:window.location.href=\"my_order_detail.html?" + params + "\"'>查看详情</button>";
 	}
 	
+	var sumPrice = data.totalPrice;
+	if (sumPrice == null) {
+		sumPrice = 0;
+	}
 	
-	$('#total-span').html("共有" + data.totalNum +  "个订单,总价格: " + data.totalPrice + " 元");
+	$('#total-span').html("共有" + data.totalNum +  "个订单,总价格: " + sumPrice + " 元");
 	
 	var totalPage = data.totalPage;
 	$('#pagination').pagination({
