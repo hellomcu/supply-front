@@ -3,6 +3,7 @@ package com.supply.front.module.order.service.impl;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.supply.contant.OrderStatus;
 import com.supply.entity.PageInfo;
 import com.supply.entity.po.OrderDetailPo;
 import com.supply.entity.po.OrderPo;
+import com.supply.entity.po.OrderSumPo;
 import com.supply.entity.po.ProductPo;
 import com.supply.exception.SupplyException;
 import com.supply.front.module.order.mapper.OrderMapper;
@@ -151,16 +153,31 @@ public class OrderServiceImpl implements OrderService
 	}
 
 	@Override
-	public PageInfo<OrderPo> findMyOrders(PageInfo<Void> page, long storeId, Timestamp createTime)
+	public List<OrderPo> findMyOrders(PageInfo<Void> page, long storeId, long createTime)
 	{
-		PageInfo<OrderPo> result = new PageInfo<>();
-		List<OrderPo> list = orderMapper.findByStoreId(storeId, createTime, page);
-		long count = orderMapper.count(storeId);
-		result.setList(list);
-		result.setTotalNum(count);
-		result.setItemNum(page.getItemNum());
-		result.setTotalPage(result.calcTotalPage());
-		result.setCurrentPage(page.getCurrentPage());
-		return result;
+		long startTime = 0;
+		long endTime = 0;
+		if (createTime != 0)
+		{
+			endTime = (createTime + (23 * 3600 + 59 * 60 + 59) * 1000) / 1000;
+			startTime = createTime / 1000;
+		}
+		List<OrderPo> list = orderMapper.findByStoreId(storeId, startTime, endTime, page);
+		
+		return list;
 	}
+
+	@Override
+	public OrderSumPo findMyOrderSum(long storeId, long createTime)
+	{
+		long startTime = 0;
+		long endTime = 0;
+		if (createTime != 0)
+		{
+			endTime = (createTime + (23 * 3600 + 59 * 60 + 59) * 1000) / 1000;
+			startTime = createTime / 1000;
+		}
+		return orderMapper.count(storeId, startTime, endTime);
+	}
+	
 }

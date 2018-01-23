@@ -1,5 +1,7 @@
 package com.supply.front.module.order.controller;
 
+import static org.mockito.Matchers.longThat;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import com.supply.entity.PageInfo;
 import com.supply.entity.base.BaseResponse;
 import com.supply.entity.po.OrderDetailPo;
 import com.supply.entity.po.OrderPo;
+import com.supply.entity.po.OrderSumPo;
 import com.supply.entity.po.UserPo;
 import com.supply.exception.SupplyException;
 import com.supply.front.auth.util.JwtUtil;
@@ -74,7 +77,7 @@ public class OrderController extends BaseController
 	
 	@ApiOperation(httpMethod = "GET", value = "获取我的订单", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@GetMapping(value="/my_orders", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public BaseResponse<PageInfo<OrderDto>> findMyOrders(@RequestParam(value = "createTime", required=false)Timestamp createTime, @RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
+	public BaseResponse<PageInfo<OrderDto>> findMyOrders(@RequestParam(value = "createTime", required=false)long createTime, @RequestParam("page") long page, @RequestParam("num") int num, HttpServletRequest request)
 	{
 		PageInfo<Void> pageInfo = new PageInfo<Void>();
 		pageInfo.setCurrentPage(page);
@@ -93,13 +96,18 @@ public class OrderController extends BaseController
 		
 		pageInfo.setCurrentPage(page);
 		pageInfo.setItemNum(num);
-		PageInfo<OrderPo> orderPos = mOrderService.findMyOrders(pageInfo, loginUser.getStoreId(), createTime);
+
+		long storeId = loginUser.getStoreId();
+		List<OrderPo> orders = mOrderService.findMyOrders(pageInfo, storeId, createTime);
+		OrderSumPo orderSumPo = mOrderService.findMyOrderSum(storeId, createTime);
+		
 		PageInfo<OrderDto> result = new PageInfo<OrderDto>();
-		result.setCurrentPage(orderPos.getCurrentPage());
-		result.setTotalNum(orderPos.getTotalNum());
-		result.setTotalPage(orderPos.getTotalPage());
-		result.setItemNum(orderPos.getItemNum());
-		result.setList(WrappedBeanCopier.copyPropertiesOfList(orderPos.getList(), OrderDto.class));
+		result.setCurrentPage(page);
+		result.setTotalPrice(orderSumPo.getTotalPrice());
+		result.setTotalNum(orderSumPo.getTotalCount());
+		result.setItemNum(num);
+		result.setTotalPage(result.getTotalPage());
+		result.setList(WrappedBeanCopier.copyPropertiesOfList(orders, OrderDto.class));
 		return getResponse(result);
 		
 //		for (OrderPo key: map.keySet())

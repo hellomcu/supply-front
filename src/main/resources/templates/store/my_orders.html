@@ -76,14 +76,17 @@
 							<div class="box-header with-border">
 								<form role="form" class="form-inline">
 									<div class="form-group">
-										<div class="input-group ">
+										<div class="input-group pull-left">
 											<div class="input-group-addon  success">配货时间</div>
 											<input id="datetimepicker" class="form-control" type="text"
 												value="" readonly> <span class="add-on"><i
 												class="icon-th"></i></span>
+											
 										</div>
+										<span id="total-span" class="pull-right"></span>
 									</div>
 								</form>
+								
 							</div>
 							<!-- /.box-header -->
 							<div class="box-body">
@@ -169,8 +172,10 @@
 				clearBtn: true,
 				autoclose : true,
 				language : 'zh-CN'
+			}).on('changeDate', function(ev){
+				getMyOrders(1, ev.date.valueOf());
 			});
-			getMyOrders(1);
+			getMyOrders(1, 0);
 		});
 	</script>
 </body>

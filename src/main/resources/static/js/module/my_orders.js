@@ -1,10 +1,10 @@
-function getMyOrders(page) {
+function getMyOrders(page, createTime) {
 
 	/*
 	 * var jsonParams = { "page" : num, "num" : 10, };
 	 */
 
-	$.myAjax('./front/order/my_orders?page=' + page + '&num=10', 'GET', null,
+	$.myAjax('./front/order/my_orders?page=' + page + '&num=10&createTime=' + createTime, 'GET', null,
 			function(data) {
 //				alert(JSON.stringify(data.data));
 
@@ -76,6 +76,9 @@ function initData(data) {
 		detail.innerHTML = "<button type='button' class='btn btn-success btn-flat' onclick='javascript:window.location.href=\"my_order_detail.html?" + params + "\"'>查看详情</button>";
 	}
 	
+	
+	$('#total-span').html("共有" + data.totalNum +  "个订单,总价格: " + data.totalPrice + " 元");
+	
 	var totalPage = data.totalPage;
 	$('#pagination').pagination({
         items: data.totalPage,
@@ -88,7 +91,7 @@ function initData(data) {
             // fire first page loading
         },
         onPageClick: function (page, evt) {
-        	getMyOrders(page);
+        	getMyOrders(page, $('#datetimepicker').val());
         }
     });
 }

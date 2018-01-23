@@ -1,5 +1,7 @@
 package com.supply.front;
 
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class SupplyFrontApplication
 
 	// destroy-method="close"的作用是当数据库连接不使用的时候,就把该连接重新放到数据池中,方便下次使用调用.
 	@Bean(destroyMethod = "close")
-	public DataSource dataSource()
+	public DataSource dataSource() throws SQLException
 	{
 		DruidDataSource dataSource = new DruidDataSource();
 		dataSource.setUrl(env.getProperty("spring.datasource.url"));
@@ -49,6 +51,7 @@ public class SupplyFrontApplication
 		dataSource.setTestOnBorrow(false);// 申请连接时执行validationQuery检测连接是否有效
 		dataSource.setTestWhileIdle(true);// 建议配置为true，不影响性能，并且保证安全性。
 		dataSource.setPoolPreparedStatements(false);// 是否缓存preparedStatement，也就是PSCache
+		dataSource.setFilters("stat");
 		return dataSource;
 	}
 }

@@ -75,8 +75,11 @@
 		AND o.id IN(
 		SELECT t.id
 		FROM (SELECT id FROM t_order WHERE t_order.store_id = #{storeId}
-    	<if test="createTime != null">  
-		AND t_order.create_time = #{createTime}
+    	<if test="startTime != 0">  
+		AND UNIX_TIMESTAMP(t_order.create_time) &gt;= #{startTime}
+		</if>
+		<if test="endTime != 0">  
+		AND UNIX_TIMESTAMP(t_order.create_time) &lt;= #{endTime}
 		</if>
 		AND t_order.status = 0
 		LIMIT #{page.startItemNum}, #{page.itemNum})AS
@@ -84,9 +87,15 @@
 		ORDER BY o.create_time DESC
 	</select>
 
-	<select id="count" resultType="long">
-		SELECT COUNT(id) FROM t_order
+	<select id="count" resultType="com.supply.entity.po.OrderSumPo">
+		SELECT COUNT(id) total_count, SUM(total_price) total_price FROM t_order
 		WHERE status = 0 AND store_id=#{storeId}
+		<if test="startTime != 0">  
+		AND UNIX_TIMESTAMP(t_order.create_time) &gt;= #{startTime}
+		</if>
+		<if test="endTime != 0">  
+		AND UNIX_TIMESTAMP(t_order.create_time) &lt;= #{endTime}
+		</if>
 	</select>
 
 </mapper>
