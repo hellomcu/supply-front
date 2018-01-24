@@ -23,9 +23,10 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="./dist/css/skins/_all-skins.min.css">
 <link rel="stylesheet" href="./js/loading/jquery.mloading.css" />
-<link type="text/css"
-	href="./datetimepicker/bootstrap-datetimepicker.min.css"
-	rel="stylesheet" />
+<!-- <link type="text/css" -->
+<!-- 	href="./datetimepicker/bootstrap-datetimepicker.min.css" -->
+<!-- 	rel="stylesheet" /> -->
+<link rel="stylesheet" href="./bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -75,19 +76,21 @@
 						<div class="box box-success">
 							<div class="box-header with-border">
 								<form role="form" class="form-inline">
-									<div class="form-group" >
-										<div id="datetimepicker" class="input-group date width100">
-                                              <input id="start"
-                                                name="start" class="form-control" type="text"
-                                                  value="" placeholder="请选择..." readonly="readonly"> <span
-                                                  class="input-group-addon"> <span
-                                                  class="glyphicon glyphicon-remove"></span>
-                                              </span> <span class="input-group-addon"> <span
-                                                  class="glyphicon glyphicon-calendar"></span>
-                                              </span>
-                                          </div>
-										<span id="total-span" ></span>
+									<div class="form-group">
+										<div class='input-group' >
+											<span class="input-group-addon">配货时间</span>
+											<input id='datetimepicker' type='text'  data-format="yyyy-mm-dd" class="form-control" id="time-input"/>
+<!-- 											 <span class="input-group-addon">  -->
+<!-- 											 	<span class="glyphicon glyphicon-calendar"></span> -->
+<!-- 											</span> -->
+											 <span class="input-group-addon" id="clear-span"> 
+<!-- 											 	<span class="glyphicon glyphicon-remove"></span> -->
+													<a href="javascript:clearTime();">全部</a>
+											</span>
+										</div>
+										
 									</div>
+									<h4 class="pull-right"><span id="total-span"></span></h4>
 								</form>
 								
 							</div>
@@ -158,28 +161,45 @@
 
 	<script src="./bootstrap-3.3.7/js/jquery.simplePagination.js"></script>
 	<script src="./js/loading/jquery.mloading.js"></script>
-	<script src="./datetimepicker/bootstrap-datetimepicker.min.js"></script>
-	<script
-		src="./datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<!-- 		<script -->
+<!-- 		src="./datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script> -->
+<!-- 	<script src="./datetimepicker/bootstrap-datetimepicker.min.js"></script> -->
+	
+	<script src="./bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	<script src="./bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+	
+
 	<script src="./js/module/my_orders.js"></script>
 	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	<script>
 		$(document).ready(function() {
-			//$('#dataTables-example').dataTable();
-			//$('#product-li').toggleClass('active').children('ul').collapse('toggle');
-			$("#datetimepicker").datetimepicker({
+			$("#datetimepicker").datepicker({
 				format : 'yyyy-mm-dd',
 				minView : "month",
 				weekStart : 1,
-				todayBtn : true,
-				clearBtn: true,
+				todayBtn : 'linked',
+				clearBtn : false,
 				autoclose : true,
-				language : 'zh-CN'
-			}).on('changeDate', function(ev){
-				getMyOrders(1, ev.date.valueOf());
+				language : 'zh-CN',
+				orientation: "bottom left"
+			}).on('changeDate', function(ev) {
+				var date = ev.date;
+				if (date === null || date === undefined) {
+					getMyOrders(1, 0);
+				} else {
+					getMyOrders(1, date.valueOf());
+				}
+				//
 			});
+			
 			getMyOrders(1, 0);
 		});
+		
+		
+		function clearTime() {
+			$("#time-input").val('');
+			$("#datetimepicker").datepicker("clearDates");
+		}
 	</script>
 </body>
 </html>

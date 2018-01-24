@@ -106,7 +106,7 @@ public class OrderController extends BaseController
 		result.setTotalPrice(orderSumPo.getTotalPrice());
 		result.setTotalNum(orderSumPo.getTotalCount());
 		result.setItemNum(num);
-		result.setTotalPage(result.getTotalPage());
+		result.setTotalPage(result.calcTotalPage());
 		result.setList(WrappedBeanCopier.copyPropertiesOfList(orders, OrderDto.class));
 		return getResponse(result);
 		

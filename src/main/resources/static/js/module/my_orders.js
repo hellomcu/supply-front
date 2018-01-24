@@ -81,7 +81,7 @@ function initData(data) {
 		sumPrice = 0;
 	}
 	
-	$('#total-span').html("共有" + data.totalNum +  "个订单,总价格: " + sumPrice + " 元");
+	$('#total-span').html("共有 <span class='text-primary'>" + data.totalNum +  "</span> 个订单,总价格:<span class='text-success'> " + sumPrice + "</span> 元");
 	
 	var totalPage = data.totalPage;
 	$('#pagination').pagination({
@@ -95,7 +95,13 @@ function initData(data) {
             // fire first page loading
         },
         onPageClick: function (page, evt) {
-        	getMyOrders(page, $('#datetimepicker').val());
+        	var date = $("#datetimepicker").datepicker("getDate");
+        	if (date === null || date === undefined) {
+        		date = 0;
+        	} else {
+        		date = date.valueOf();
+        	}
+        	getMyOrders(page, date);
         }
     });
 }
